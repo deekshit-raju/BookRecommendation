@@ -1,0 +1,197 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!--<title>{% block title %}Viberr{% endblock %}</title>-->
+    <!--{% load staticfiles %}-->
+    <link rel="shortcut icon" type="image/png" href="{%  static 'favicon.ico' %}"/>
+        <!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.5/css/bulma.min.css">-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <link href='https://fonts.googleapis.com/css?family=Satisfy' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="{% static 'music/style.css' %}"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script>
+    function fun(id)
+    {
+        return toString(document.getElementById("rate_it")).value+toString(id)
+    }
+</script>
+
+    <!--<script src="{% static 'music/js/main.js' %}"></script>-->
+</head>
+<body>
+<center>
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+
+        <!-- Header -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#topNavBar">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="{% url 'home' %}">Book Recommendation System</a>
+        </div>
+
+        <!-- Items -->
+        <div class="collapse navbar-collapse" id="topNavBar">
+            <ul class="nav navbar-nav">
+                <li class="{% block albums_active %}{% endblock %}"><a href="{% url 'home' %}"><span class="glyphicon glyphicon-book" aria-hidden="true"></span>&nbsp; Books</a></li>
+                <!--<li class="{% block songs_active %}{% endblock %}"><a href="{% url 'home' %}"><span class="glyphicon glyphicon-music" aria-hidden="true"></span>&nbsp; Songs</a></li>-->
+            </ul>
+            <form class="navbar-form navbar-left" >
+                <div class="form-group">
+                    <input type="search" class="form-control" placeholder="search" name="search">
+                </div>
+                <button type="submit" class="btn btn-default">Search</button>
+            </form>
+            <!--<form class="navbar-form navbar-left">-->
+    <!--<input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="search" >-->
+    <!--<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>-->
+    <!--</form>-->
+            <ul class="nav navbar-nav navbar-right">
+                {% if cart %}
+                <li>
+                    <a href="{% url 'checkout' %}">
+                        <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>&nbsp; Check&nbsp;Out
+                    </a>
+                </li>
+                {% endif %}
+                {% if checkout %}
+                <li>
+                    <a href="{% url 'addtocart' %}">
+                        <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>&nbsp; Cart
+                    </a>
+                </li>
+                {% endif %}
+                 <li>
+                    <a href="{% url 'purchases' %}">
+                        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp; Purchases
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{% url 'logout' %}">
+                        <span class="glyphicon glyphicon-off" aria-hidden="true"></span>&nbsp; Logout
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+    </div>
+</nav>
+</center>
+
+
+
+
+<div class="albums-container container-fluid">
+
+    <!-- Albums -->
+    <div class="row has-background-primary">
+        <div class="col-sm-12">
+            <!--<h3>{{ user.username }}'s Albums</h3>-->
+        </div>
+        {% if checkout %}
+            {% for album in albums %}
+                <div class="col-sm-7 ">
+                    <div class="thumbnail">
+                        <a href="{% url 'bookdet' album.id %}">
+                            <img src="{{ album.image_url }}" class="img-responsive">
+                        </a>
+                        <div class="caption">
+                            <h4>{{ album.title }}</h4>
+                            <h5>{{ album.author }}</h5>
+                            <h5>Rs. &nbsp;{{album.price}}</h5>
+
+                            <!-- View Details -->
+                            <a href="{% url 'bookdet' album.id %}" class="btn btn-primary btn-sm" role="button">View Details</a>
+                            <hr>
+                            <form method="get" action="{% url 'collab' album.id %}">
+                            <div >
+                                <input type="number" class="form-control" placeholder="rate it!" max="5" min="1" name="rate_it" id="rate_it">
+                                <a href="{% url 'collab' album.id %}"><input type="submit" value="Give Rating"/></a>
+                            </div>
+                            </form>
+                            <!-- Favorite Album -->
+
+                        </div>
+                    </div>
+                </div>
+                {% cycle '' '' '' '' '' '<div class="clearfix visible-lg"></div>' %}
+            {% endfor %}
+            {% for album in albums1 %}
+                <div class="col-sm-7 ">
+                    <div class="thumbnail">
+                        <a href="{% url 'bookdet' album.id %}">
+                            <img src="{{ album.image_url }}" class="img-responsive">
+                        </a>
+                        <div class="caption">
+                            <h4>{{ album.title }}</h4>
+                            <h5>{{ album.author }}</h5>
+                            <h5>Rs. &nbsp;{{album.price}}</h5>
+
+                            <!-- View Details -->
+                            <a href="{% url 'bookdet' album.id %}" class="btn btn-primary btn-sm" role="button">View Details</a>
+                            <hr>
+                            <!-- Favorite Album -->
+
+                        </div>
+                    </div>
+                </div>
+                {% cycle '' '' '' '' '' '<div class="clearfix visible-lg"></div>' %}
+            {% endfor %}
+        {% endif %}
+    </div>
+
+
+
+
+     <!--<div class="row has-background-primary">-->
+        <!--<div class="col-sm-12">-->
+            <!--<h3>{{ user.username }}'s Albums</h3>-->
+        </div>
+        {% if cart %}
+            {% for album in albums %}
+                <div class="col-sm-7 ">
+                    <div class="thumbnail">
+                        <a href="{% url 'bookdet' album.id %}">
+                            <img src="{{ album.image_url }}" class="img-responsive">
+                        </a>
+                        <div class="caption">
+                            <h4>{{ album.title }}</h4>
+                            <h5>{{ album.author }}</h5>
+                            <h5>Rs. &nbsp;{{album.price}}</h5>
+
+                            <!-- View Details -->
+                            <a href="{% url 'bookdet' album.id %}" class="btn btn-primary btn-sm" role="button">View Details</a>
+                            <!-- Favorite Album -->
+
+                            <a href="{% url 'remove' album.id %}" class="btn btn-default btn-sm btn-favorite" role="button">
+                                Remove from &nbsp;<span class="glyphicon glyphicon-shopping-cart "></span>
+                            </a>
+
+                        </div>
+                    </div>
+                </div>
+                {% cycle '' '' '' '' '' '<div class="clearfix visible-lg"></div>' %}
+            {% endfor %}
+        {% endif %}
+    </div>
+
+
+
+
+
+
+</div>
+{% if cart %}
+<h3>Grand &nbsp;Total&nbsp;:&nbsp; Rs.&nbsp;{{price}}</h3>
+{% endif %}
+</center>
+
+</body>
+</html>

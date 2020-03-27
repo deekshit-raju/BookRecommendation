@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.5/css/bulma.min.css">
+</head>
+<body>
+<h1 style="font-size: 300%;"class="has-background-link">{{ action1 }} form</h1>
+<br><br>
+<form method="POST" class=" ">
+    {% csrf_token %}
+<table align="center" class="table is-striped is-hoverable">
+{{ form.as_table }}
+</table>
+    <center><button class="button is-link is-rounded" type="submit">{{ action1 }}</button></center>
+</form>
+<br>
+<center><a href="/{{ action2 }}"> <button class="button is-link is-rounded">{{ action2 }}</button></a></center>
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>
+        {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}Important: {% endif %}
+        {{ message }}
+    </li>
+    {% endfor %}
+</ul>
+{% endif %}
+</body>
+</html>

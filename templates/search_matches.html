@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.5/css/bulma.min.css">
+    <title>Search Matches...</title>
+</head>
+<body>
+<center>
+    <nav><h2 style="float:left">HOME</h2></nav>
+    <hr>
+    <br>
+    <table class="table">
+        {% for book in pop %}
+            <tr>
+                <td><img src="{{book.image_url}}"/></td>
+                <td>{{book.title}}</td>
+            </tr>
+        {% endfor %}
+    </table>
+ </center>
+</body>
+</html>

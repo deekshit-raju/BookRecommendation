@@ -1,0 +1,85 @@
+
+{% extends 'base.html' %}
+<!--{% block albums_active %}active{% endblock %}-->
+
+{% block body %}
+<div class="albums-container container-fluid">
+
+    <!-- Albums -->
+    <div class="row">
+        <div class="col-sm-12">
+            <!--<h3>{{ user.username }}'s Albums</h3>-->
+        </div>
+        {% if albums %}
+            {% for album in albums %}
+                <div class="col-sm-7 col-lg-2">
+                    <div class="thumbnail">
+                        <a href="{% url 'bookdet' album.id %}">
+                            <img src="{{ album.image_url }}" class="img-responsive">
+                        </a>
+                        <div class="caption">
+                            <h4>{{ album.title }}</h4>
+                            <h5>{{ album.author }}</h5>
+
+                            <!-- View Details -->
+                            <a href="{% url 'bookdet' album.id %}" class="btn btn-primary btn-sm" role="button">See Details</a>
+
+
+                            <!-- Favorite Album -->
+                            <a href="{% url 'addtocart' album.id %}" class="btn btn-default btn-sm btn-favorite" role="button">
+                                Add to &nbsp;<span class="glyphicon glyphicon-shopping-cart "></span>
+                            </a>
+
+                        </div>
+                    </div>
+                </div>
+                {% cycle '' '' '' '' '' '<div class="clearfix visible-lg"></div>' %}
+            {% endfor %}
+        {% endif %}
+    </div>
+
+    <!-- If user searches and there are songs -->
+    <!--{% if songs %}-->
+        <!--<div class="row">-->
+            <!--<div class="col-sm-12">-->
+                <!--<h3>Songs</h3>-->
+            <!--</div>-->
+            <!--<div class="col-sm-12">-->
+                <!--<div class="panel panel-default">-->
+                    <!--<div class="panel-body">-->
+                        <!--<table class="table">-->
+                            <!--<thead>-->
+                                <!--<tr>-->
+                                    <!--<th>Song Title</th>-->
+                                    <!--<th>Artist</th>-->
+                                    <!--<th>Audio File</th>-->
+                                    <!--<th>Album</th>-->
+                                    <!--<th>Favorite</th>-->
+                                <!--</tr>-->
+                            <!--</thead>-->
+                            <!--<tbody>-->
+                                <!--{% for song in songs %}-->
+                                    <!--<tr>-->
+                                        <!--<td>{{ song.song_title }}</td>-->
+                                        <!--<td>{{ song.album.artist }}</td>-->
+                                        <!--<td>-->
+                                            <!--<a target="_blank" href="{{ song.audio_file.url }}">-->
+                                                <!--<button type="button" class="btn btn-success btn-xs">-->
+                                                    <!--<span class="glyphicon glyphicon-play"></span>&nbsp; Play-->
+                                                <!--</button>-->
+                                            <!--</a>-->
+                                        <!--</td>-->
+                                        <!--<td>-->
+                                        <!--</td>-->
+                                    <!--</tr>-->
+                                <!--{% endfor %}-->
+                            <!--</tbody>-->
+                        <!--</table>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--{% endif %}-->
+
+</div>
+{% endblock %}

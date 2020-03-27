@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.5/css/bulma.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+</head>
+<body>
+    <nav class="has-background-info"><marquee><h1>Book Recommendation System</h1></marquee><h3 style="float:right">User</h3></nav>
+    <hr>
+    <center>
+    <form class="form-inline my-2 my-lg-0">
+    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="search" >
+    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+    </form>
+    <h2><b>Popular Books</b></h2>
+    <table class="table is-striped ">
+            <!--<table>-->
+                <!--{% for book in books %}-->
+                <!--<tr>-->
+                <!--{% for i in book  %}-->
+                    <!--<td><div><img href="{{i.img}}"/>{{ i.id }}</div></td>-->
+                <!--{% endfor %}-->
+                <!--</tr>-->
+                <!--{% endfor %}-->
+            <!--</table>-->
+        {% for lis in pop %}
+            <tr style="width:30px">
+                {% for item in lis %}
+
+                    <td class="is-hoverable">
+                        <center><a href="{% url 'bookdet' item.id %}"><img src="{{item.image_url}}"></a>
+                            <a href="#"><b><h4>{{item.title}}</h4></b></a></center>
+                    </td>
+                {% endfor %}
+            </tr>
+        {% endfor %}
+    </table>
+    </center>
+</body>
+</html>
